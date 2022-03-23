@@ -15,7 +15,7 @@ struct file_lines_t
 
 /**
  * @brief Starts a file stream if the file exists and is readable.
- * 
+ *
  * @param path path to the file.
  * @return FILE* pointer to the file stream.
  */
@@ -36,7 +36,7 @@ FILE *stream_file(const char *path)
 
 /**
  * @brief Counts the number of lines in a file.
- * 
+ *
  * @param file pointer to the file stream
  * @return uint32_t number of lines in the file
  */
@@ -61,7 +61,7 @@ uint32_t file_lines_count(FILE *file)
 
 /**
  * @brief Reads the contents of a file stream into an array of strings.
- * 
+ *
  * @param file pointer to the file stream to read from.
  * @return char** pointer to the array of strings.
  */
@@ -76,11 +76,8 @@ char **file_lines_to_array(FILE *file)
     // variable to store a single line of 50 characters
     char this_line[50];
 
-    // variable to store the current line number
-    uint32_t line_number = 0;
-
     // stream the file until the end
-    while (fgets(this_line, sizeof(this_line), file))
+    for (uint32_t line_number = 0; fgets(this_line, sizeof(this_line), file); line_number++)
     {
         // if the last character is a newline, remove it
         if (this_line[strlen(this_line) - 1] == '\n')
@@ -89,9 +86,6 @@ char **file_lines_to_array(FILE *file)
         // copy the memory contents of this_line to the memory of current index
         lines[line_number] = malloc(sizeof(this_line));
         strcpy(lines[line_number], this_line);
-
-        // increment the line number
-        line_number++;
     }
 
     // reset the file pointer to the beginning of the file
@@ -125,11 +119,8 @@ struct file_lines_t read_lines(const char *path)
     // variable to store a single line of 50 characters
     char this_line[50];
 
-    // variable to store the current line number
-    uint32_t line_number = 0;
-
     // stream the file until the end
-    while (fgets(this_line, sizeof(this_line), file))
+    for (uint32_t line_number = 0; fgets(this_line, sizeof(this_line), file); line_number++)
     {
         // if the last character is a newline, remove it
         if (this_line[strlen(this_line) - 1] == '\n')
@@ -138,9 +129,6 @@ struct file_lines_t read_lines(const char *path)
         // copy the memory contents of this_line to the memory of current index
         lines[line_number] = malloc(sizeof(this_line));
         strcpy(lines[line_number], this_line);
-
-        // increment the line number
-        line_number++;
     }
 
     // reset the file pointer to the beginning of the file
