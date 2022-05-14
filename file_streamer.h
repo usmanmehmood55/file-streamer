@@ -13,16 +13,40 @@ struct file_lines_t
     uint32_t count;
 };
 
+enum file_stream_mode
+{
+    READ = 'r',
+    WRITE = 'w',
+    APPEND = 'a'
+};
+
 /**
- * @brief Starts a file stream if the file exists and is readable.
+ * @brief Starts a file stream in read mode if the file exists.
  *
  * @param path path to the file.
  * @return FILE* pointer to the file stream.
  */
-FILE *stream_file(const char *path)
+FILE *stream(const char *path, enum file_stream_mode mode)
 {
-    // open the file in read mode
-    FILE *_p_file = fopen(path, "r");
+    // switch to the correct mode
+    char *mode_str = NULL;
+    switch (mode)
+    {
+        case READ:
+            mode_str = "r";
+            break;
+        case WRITE:
+            mode_str = "w";
+            break;
+        case APPEND:
+            mode_str = "a";
+            break;
+        default:
+            break;
+    }
+
+    // open the file
+    FILE *_p_file = fopen(path, mode_str);
 
     // check if the file was opened successfully
     if (_p_file == NULL)
@@ -108,7 +132,7 @@ struct file_lines_t read_lines(const char *path)
 {
 
     // initialize file stream
-    FILE *file = stream_file(path);
+    FILE *file = stream(path, READ);
 
     // get the number of lines in the file
     uint32_t lines_count = file_lines_count(file);
