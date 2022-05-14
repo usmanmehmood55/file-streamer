@@ -9,15 +9,19 @@ Reading and printing lines of a file is easy, but storing it in an easily access
 ## Usage
 File can be read by the following function:
 
-    struct file_lines_t read_lines(const char *path)
+```c
+struct file_lines_t read_lines(const char *path)
+```
 
 Whereas the struct contains the array of lines and the number of lines in the file.
 
-    struct file_lines_t
-    {
-        char **lines;
-        uint32_t count;
-    };
+```c
+struct file_lines_t
+{
+    char **lines;
+    uint32_t count;
+};
+```
 
 ## To Do
 - Think of a better name for this repo
