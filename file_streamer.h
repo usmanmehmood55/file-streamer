@@ -168,4 +168,57 @@ struct file_lines_t read_lines(const char *path)
     return file_lines;
 }
 
+/**
+ * @brief Overwrites all the strings in the array to the file.
+ * 
+ * @param path the path to the file.
+ * @param file_lines the struct containing the array of strings and the size of the array.
+ */
+void write_lines(const char *path, struct file_lines_t file_lines)
+{
+    // open the file in write mode
+    FILE *file = stream(path, WRITE);
+
+    // iterate through the array of strings
+    for (uint32_t i = 0; i < file_lines.count; i++)
+    {
+        // write the string to the file
+        fprintf(file, "%s\n", file_lines.lines[i]);
+    }
+
+    // close the file stream
+    fclose(file);
+}
+
+/**
+ * @brief Appends all the strings in the array to the file.
+ * 
+ * @param path the path to the file.
+ * @param file_lines the struct containing the array of strings and the size of the array.
+ */
+void append_lines(const char *path, struct file_lines_t file_lines)
+{
+    // open the file in append mode
+    FILE *file = stream(path, APPEND);
+
+    // iterate through the array of strings
+    for (uint32_t i = 0; i < file_lines.count; i++)
+    {
+        // append the string to the file
+        fprintf(file, "%s\n", file_lines.lines[i]);
+    }
+
+    // close the file stream
+    fclose(file);
+}
+
+// function to append a string to the file
+void append_line(const char *path, const char *line)
+{
+    // open the file in append mode
+    FILE *file = stream(path, APPEND);
+    fprintf(file, "%s\n", line);
+    fclose(file);
+}
+
 #endif // FILE_STREAMER_H
